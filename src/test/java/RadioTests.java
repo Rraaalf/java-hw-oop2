@@ -17,6 +17,18 @@ public class RadioTests {
     }
 
     @ParameterizedTest
+    @CsvFileSource(files = "src/test/resources/stations/setStationsFlex.csv")
+    public void testSetStationsFlex(int numberOfStations, int setStation, int expected) {
+        Radio radio = new Radio(numberOfStations);
+        radio.setCurrentStation(0);
+
+        radio.setCurrentStation(setStation);
+        int actual = radio.getCurrentStation();
+
+        Assertions.assertEquals(expected, actual);
+    }
+
+    @ParameterizedTest
     @CsvFileSource(files = "src/test/resources/stations/nextStation.csv")
     public void testNextStation(int currentStation, int expected) {
         Radio radio = new Radio();
@@ -29,9 +41,33 @@ public class RadioTests {
     }
 
     @ParameterizedTest
+    @CsvFileSource(files = "src/test/resources/stations/nextStationFlex.csv")
+    public void testNextStationFlex(int numberOfStations, int currentStation, int expected) {
+        Radio radio = new Radio(numberOfStations);
+        radio.setCurrentStation(currentStation);
+
+        radio.nextStation();
+        int actual = radio.getCurrentStation();
+
+        Assertions.assertEquals(expected, actual);
+    }
+
+    @ParameterizedTest
     @CsvFileSource(files = "src/test/resources/stations/prevStation.csv")
     public void testPrevStation(int currentStation, int expected) {
         Radio radio = new Radio();
+        radio.setCurrentStation(currentStation);
+
+        radio.prevStation();
+        int actual = radio.getCurrentStation();
+
+        Assertions.assertEquals(expected, actual);
+    }
+
+    @ParameterizedTest
+    @CsvFileSource(files = "src/test/resources/stations/prevStationFlex.csv")
+    public void testPrevStationFlex(int numberOfStations, int currentStation, int expected) {
+        Radio radio = new Radio(numberOfStations);
         radio.setCurrentStation(currentStation);
 
         radio.prevStation();
